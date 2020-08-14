@@ -1,4 +1,4 @@
-const userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36";
+const userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36";
 const regex = new RegExp(/(discord\.gift\/|discord\.com\/gifts\/|discordapp\.com\/gifts\/)[^\s]+/gmi);
 
 const dotenv = require('dotenv').config({ path: 'dotenv' });
@@ -49,7 +49,9 @@ for (const token of tokens) {
          let start = new Date();
          
          code = code.replace(/(discord\.gift\/|discord\.com\/gifts\/|discordapp\.com\/gifts\/)/gmi, '');
-
+         code = code.replace(/[^\W]g, '');
+         //TODO: Support for realcode&,a -> realcode
+         if(code.length > 26 || code.lenght < 16) console.log(`[Nitro Sniper] (${codes}) - Fake Code - ${msg.guild ? msg.guild.name : "DMs"}`) && return; 
          phin({
             url: `https://discord.com/api/v6/entitlements/gift-codes/${code}/redeem`,
             method: 'POST',
