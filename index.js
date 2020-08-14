@@ -49,7 +49,7 @@ for (const token of tokens) {
          let start = new Date();
          
          code = code.replace(/(discord\.gift\/|discord\.com\/gifts\/|discordapp\.com\/gifts\/)/gmi, '');
-         code = code.replace(/[^\W]g, '');
+         code = code.replace(/\W/g, '');
          //TODO: Support for realcode&,a -> realcode
          if(code.length > 26 || code.length < 16) console.log(`[Nitro Sniper] (${codes}) - Fake Code - ${msg.guild ? msg.guild.name : "DMs"}`) && return; 
          phin({
