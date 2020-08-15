@@ -52,8 +52,7 @@ for (const token of tokens) {
          
          //TODO: Support for realcode&,a -> realcode
          if(code.length > 26 || code.length < 16) {
-            console.log(`[Nitro Sniper] (${code}) - Fake Code - ${msg.guild ? msg.guild.name : "DMs"}`);
-            return;
+            return console.log(`[Nitro Sniper] (${code}) - Fake Code - ${msg.guild ? msg.guild.name : "DMs"}`);
          } 
          
          phin({
