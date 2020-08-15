@@ -3,6 +3,7 @@ const regex = new RegExp(/(discord\.gift\/|discord\.com\/gifts\/|discordapp\.com
 
 const dotenv = require('dotenv').config({ path: 'dotenv' });
 const phin = require('phin').unpromisified;
+const chalk = require('chalk');
 
 const { Client } = require('discord.js');
 
@@ -44,7 +45,7 @@ for (const token of tokens) {
 
    client.on('message', async msg => {
       let codes = msg.content.match(regex);
-      if (!codes || codes === null || codes.length === 0) return;
+      if (!codes || codes.length === 0) return;
       for (let code of codes) {
          let start = new Date();
          
@@ -66,22 +67,22 @@ for (const token of tokens) {
          }, (err, res) => {
             let end = `${new Date() - start}ms`;
             if (err) {
-               console.log(`[Nitro Sniper] (${code}) - Error - ${err}`);
+               console.log(chalk`{cyan [Nitro Sniper]} {redBright (${code}) - Error - ${err}.}`);
             } else if (res.body.message === '401: Unauthorized') {
-               console.log(`[Nitro Sniper] (${code}) - Error - Your main token is invalid.`)
+               console.log(chalk`{cyan [Nitro Sniper]} {red (${code}) - Error - Your main token is invalid.}`);
             } else if (res.body.message == "This gift has been redeemed already.") {
-               console.log(`[Nitro Sniper] (${code}) - Already redeemed - ${msg.guild ? msg.guild.name : "DMs"} - ${end}`)
+               console.log(chalk`{cyan [Nitro Sniper]} {yellow (${code}) - Already redeemed - ${msg.guild ? msg.guild.name : "DM"} from ${msg.author.tag} - ${end}.}`);
             } else if ('subscription_plan' in res.body) {
-               console.log(`[Nitro Sniper] (${code}) - Success - ${res.body.subscription_plan.name} - ${msg.guild ? msg.guild.name : "DMs"}  - ${end}`)
+               console.log(chalk`{cyan [Nitro Sniper]} {greenBright (${code}) - Success - ${res.body.subscription_plan.name} - ${msg.guild ? msg.guild.name : "DM"} from ${msg.author.tag} - ${end}.}`);
             } else if (res.body.message == "Unknown Gift Code") {
-               console.log(`[Nitro Sniper] (${code}) - Invalid Code - ${msg.guild ? msg.guild.name : "DMs"}  - ${end}`)
+               console.log(chalk`{cyan [Nitro Sniper]} {yellow (${code}) - Invalid Code - ${msg.guild ? msg.guild.name : "DMs"}  - ${end}.}`);
             }
          })
       }
    })
 
    client.on('ready', () => {
-      console.log(`[Nitro Sniper] Logged in as ${client.user.tag}.`)
+      console.log(chalk`{cyan [Nitro Sniper]} {magenta Logged in as ${client.user.tag}.}`)
    })
 
    setTimeout(() => {
